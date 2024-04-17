@@ -5,7 +5,7 @@
 #include "Event/Event.h"
 #include "Platform/Window.h"
 
-#include "Loader/Obj/ObjParser.h"
+#include "Loader/ObjParser/ObjParser.h"
 
 #include "Input.h"
 
