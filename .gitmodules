@@ -1,0 +1,3 @@
+[submodule "Flarea/External/spdlog"]
+	path = Flarea/External/spdlog
+	url = https://github.com/gabime/spdlog
