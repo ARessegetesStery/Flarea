@@ -88,7 +88,7 @@ namespace FLR {
 	void Application::MainLoop()
 	{
 		Entity entity;
-		entity.SetPosition(glm::vec3(0.0f, 0.0f, -3.0f);
+		entity.SetPosition(glm::vec3(0.0f, 0.0f, -3.0f));
 		this->AddEntity(&entity);
 		ObjParser parser(&entity, "Cube");
 		parser.Parse();
