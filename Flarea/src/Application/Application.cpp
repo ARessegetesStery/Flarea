@@ -54,12 +54,14 @@ namespace FLR {
 	bool Application::OnKeyPressed(KeyPressedEvent& e)
 	{
 		FLR_CORE_INFO(e.ToString());
+		camera.ProcessKeyEvent(&e);
 		return true;
 	}
 
 	bool Application::OnKeyReleased(KeyReleasedEvent& e)
 	{
 		FLR_CORE_INFO(e.ToString());
+		camera.ProcessKeyEvent(&e);
 		return false;
 	}
 
@@ -86,6 +88,8 @@ namespace FLR {
 	void Application::MainLoop()
 	{
 		Entity entity;
+		entity.SetPosition(glm::vec3(0.0f, 0.0f, -3.0f);
+		this->AddEntity(&entity);
 		ObjParser parser(&entity, "Cube");
 		parser.Parse();
 		entity.Log();

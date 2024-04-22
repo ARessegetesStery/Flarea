@@ -37,6 +37,8 @@ namespace FLR {
 
 		void UpdateApp();
 
+		inline void AddEntity(Entity* ent) { entities.push_back(ent); }
+
 	private:
 		bool running;
 		float last_frame_time;
@@ -46,6 +48,7 @@ namespace FLR {
 		static Application* instance;
 
 		Camera camera;
+		std::vector<Entity*> entities;
 
 		LayerStack layer_stack;
 	};

@@ -7,6 +7,7 @@ namespace FLR
 {
 	void Camera::ProcessKeyEvent(const KeyEvent* const e)
 	{
+		//FLR_CORE_INFO("From Camera: {0}", e->ToString());
 		if (e->GetEventType() == EventType::KeyPressed)
 		{
 			const KeyPressedEvent* const keyEvent = static_cast<const KeyPressedEvent* const>(e);

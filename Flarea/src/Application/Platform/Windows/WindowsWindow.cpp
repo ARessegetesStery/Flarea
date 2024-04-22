@@ -47,7 +47,9 @@ namespace FLR {
 		FLR_CORE_ASSERT(success, "GLAD failed to load!")
 		glfwSetWindowUserPointer(window, &m_Info);
 
-		/* ------ Setting up GLFW Callback Links ------*/
+		glEnable(GL_DEPTH_TEST);
+
+		/* ------ Setting up GLFW Callback Links ------ */
 		glfwSetWindowCloseCallback(window, [](GLFWwindow* window)
 		{
 			WindowInfo& info = *(WindowInfo*)glfwGetWindowUserPointer(window);
