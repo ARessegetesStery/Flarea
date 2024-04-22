@@ -88,6 +88,7 @@ namespace FLR {
 		Entity entity;
 		ObjParser parser(&entity, "Cube");
 		parser.Parse();
+		entity.Log();
 
 		while (running)
 		{

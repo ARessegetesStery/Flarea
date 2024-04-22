@@ -16,13 +16,10 @@ namespace FLR {
         {
             if (ent == nullptr)
             {
-#ifdef EQX_DEBUG
-                Print("[ERROR] Invalid Entity to parse into!");
-                Print("The EntityInfo passed in is:");
-                EQX_LOG(ent)
-#endif
-                ent = nullptr;
+#ifdef FLR_DEBUG
+                FLR_CORE_ERROR("[ERROR] Invalid Entity to parse into!");
                 FLR_CORE_ERROR("Trying to parse into nullptr (expecting an `Entity`)");
+#endif
             }
             this->ent = ent;
             this->filename = filename;

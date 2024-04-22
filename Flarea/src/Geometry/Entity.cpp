@@ -5,6 +5,8 @@ namespace FLR
 {
 	Entity::Entity()
 	{
+		this->entity_id = Entity::entity_count;
+		++entity_count;
 		this->mesh = Mesh();
 	}
 
@@ -33,4 +35,14 @@ namespace FLR
 	{
 		this->mesh.AddFace(a, b, c);
 	}
+
+#ifdef FLR_DEBUG
+	void Entity::Log() const
+	{
+		FLR_CORE_INFO("---- Logging Entity {0} ----", this->entity_id);
+		FLR_CORE_TRACE("Mesh Info:");
+		this->mesh.Log();
+		FLR_CORE_INFO("---- End Logging Entity ----", this->entity_id);
+	}
+#endif
 }

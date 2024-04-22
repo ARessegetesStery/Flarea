@@ -11,7 +11,10 @@ namespace FLR {
     void ObjParser::Parse()
     {
         if (this->ent == nullptr)
+        {
+            FLR_CORE_CRITICAL("[ERROR] Invalid Entity to parse into!");
             return;
+        }
 
         /*  Parsing  */
         std::ifstream infile;
@@ -21,8 +24,8 @@ namespace FLR {
 
         if (!infile.is_open())
         {
-#ifdef EQX_DEBUG
-        cout << "Cannot open file \"" << filename << "\"" << endl;
+#ifdef FLR_DEBUG
+            FLR_CORE_CRITICAL("[ERROR] Cannot open file \"{0}.obj\"", this->filename);
 #endif
             return;
         }
@@ -46,17 +49,15 @@ namespace FLR {
                 continue;
             else if (linebuf[0] == 'o' && linebuf[1] == ' ')
             {
-                if (isFirstObj == true)
-                /*    isFirstObj = false;
+                if (isFirstObj == false)
+                {
+                    FLR_CORE_CRITICAL("[ERROR] Parsing .obj files containing multiple objects is not supported for now");
+                }
                 else
                 {
-                    for (auto iter = fs.begin(); iter != fs.cend(); ++iter)
-                    {
-                        p_ent->AddFaceToMesh({ {v[iter->f[0].x], v[iter->f[1].x], v[iter->f[2].x]},
-                            {v[iter->f[2].x], v[iter->f[0].x], v[iter->f[3].x]} });
-                    }
-                    fs.clear();
-                }*/
+                    isFirstObj = false;
+                }
+
                 if (std::sscanf(linebuf, "o %s", curObjName))
                 {
                     if (curObjName[0] > 64 && curObjName[0] < 91)

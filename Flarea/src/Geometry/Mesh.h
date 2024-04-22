@@ -19,8 +19,12 @@ namespace FLR
 
 		void operator= (const Mesh& m);
 
+#ifdef FLR_DEBUG
+		void Log() const;
+#endif
+
 	public:
-		std::vector<Vertex> vertices;
-		std::vector<std::array<size_t, 3>> face_indices;
+		vector<Vertex> vertices;
+		vector<std::array<size_t, 3>> face_indices;
 	};
 }
