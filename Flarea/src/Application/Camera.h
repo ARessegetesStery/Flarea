@@ -7,7 +7,7 @@ namespace FLR
 	class Camera
 	{
 	public:
-		glm::vec3 camera_pos = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 camera_pos = glm::vec3(0.0f, 0.0f, 3.0f);
 		glm::vec3 camera_front = glm::vec3(0.0f, 0.0f, -1.0f);
 		glm::vec3 camera_up = glm::vec3(0.0f, 1.0f, 0.0f);
 		float fov = 45.f;

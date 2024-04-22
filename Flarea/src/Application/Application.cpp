@@ -8,6 +8,7 @@
 #include "Loader/ObjParser/ObjParser.h"
 
 #include "Util/Input.h"
+#include "Util/Util.h"
 
 #include <GLAD/glad.h>
 
@@ -119,7 +120,8 @@ namespace FLR {
 
 		FLR_CORE_INFO("raw_vertices.size: {0}", raw_vertices.size());
 
-		shader.Set("resources/shader/test.vs", "resources/shader/test.fs");
+		//shader.Set("resources/shader/test.vs", "resources/shader/test.fs");
+		shader.Set(this->vs.c_str(), this->fs.c_str());
 
 		// TODO Load Texture
 
@@ -141,32 +143,62 @@ namespace FLR {
 		for (auto ent : entities)
 		{
 			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, ent->GetPosition());
+			FLR_CORE_INFO(">> Position: {0}, {1}, {2}", ent->GetPosition().x, ent->GetPosition().y, ent->GetPosition().z);
 
+			model = glm::translate(model, ent->GetPosition());
 			model = glm::rotate(model, ent->GetRotation(), glm::vec3(1.0f, 0.3f, 0.5f));
 			shader.setMat4("model", model);
-
 			glDrawArrays(GL_TRIANGLES, 0, trig_count * 3);
+		}
+	}
+
+	void Application::LoadAssets()
+	{
+		rapidjson::Document game_config;
+		ReadJsonFile("resources/game.config", game_config);
+		const string shader_path = "resources/shader/";
+		if (game_config.HasMember("vs"))
+			this->vs = shader_path + game_config["vs"].GetString();
+		if (game_config.HasMember("fs"))
+			this->fs = shader_path + game_config["fs"].GetString();
+
+		if (game_config.HasMember("entities"))
+		{
+			const rapidjson::Value& entities = game_config["entities"];
+			for (rapidjson::Value::ConstValueIterator itr = entities.Begin(); itr != entities.End(); ++itr)
+			{
+				entity_pool.emplace_back();
+				Entity& entity = entity_pool.back();
+				glm::vec3 pos(0.0f, 0.0f, 0.0f);
+				for (rapidjson::Value::ConstMemberIterator itr2 = itr->MemberBegin(); itr2 != itr->MemberEnd(); ++itr2)
+				{
+					if (itr2->name == "obj")
+					{
+						FLR_CORE_INFO("Loading {0}", itr2->value.GetString());
+						ObjParser parser(&entity, itr2->value.GetString());
+						parser.Parse();
+					}
+					if (itr2->name == "x")
+						pos.x = itr2->value.GetFloat();
+					if (itr2->name == "y")
+						pos.y = itr2->value.GetFloat();
+					if (itr2->name == "z")
+						pos.z = itr2->value.GetFloat();
+					if (itr2->name == "rotation")
+						entity.SetRotation(itr2->value.GetFloat());
+				}
+				//FLR_CORE_INFO("Position: {0}, {1}, {2}", pos.x, pos.y, pos.z);
+				entity.SetPosition(pos);
+				this->AddEntity(&entity);
+
+				// TODO check why using deque directly does not work
+			}
 		}
 	}
 
 	void Application::MainLoop()
 	{
-		Entity entity;
-		entity.SetPosition(glm::vec3(0.0f, 0.0f, -2.0f));
-		entity.SetRotation(0.0f);
-		ObjParser parser(&entity, "teapot");
-		parser.Parse();
-		//entity.Log();
-		this->AddEntity(&entity);
-
-		Entity entity2;
-		entity2.SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
-		entity2.SetRotation(0.0f);
-		ObjParser parser2(&entity2, "cube");
-		parser2.Parse();
-		//this->AddEntity(&entity2);
-		//entity.Log();
+		this->LoadAssets();
 
 		this->LoadEntities();
 

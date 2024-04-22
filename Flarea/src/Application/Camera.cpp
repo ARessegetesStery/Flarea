@@ -31,12 +31,6 @@ namespace FLR
             {
                 lastX = xpos;
                 lastY = ypos;
-            }
-
-            if (mouse_first)
-            {
-                lastX = xpos;
-                lastY = ypos;
                 mouse_first = false;
             }
 

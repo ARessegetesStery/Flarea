@@ -37,6 +37,7 @@ namespace FLR {
 
 		void LoadEntities();
 
+		void LoadAssets();
 		void MainLoop();
 
 		void UpdateApp();
@@ -50,10 +51,13 @@ namespace FLR {
 		float frame_delta_time;
 		std::unique_ptr<Window> window;
 
+		std::deque<Entity> entity_pool;
 		std::vector<float> raw_vertices;
 
 		static Application* instance;
 		Shader shader;
+
+		string vs, fs;
 
 		size_t trig_count = 0;
 		unsigned int buffer_object = 0;
