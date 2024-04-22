@@ -5,7 +5,6 @@
 namespace FLR {
 
 	namespace Parsing {
-
         struct IndexVector3
         {
             int x;

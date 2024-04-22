@@ -8,13 +8,13 @@ namespace FLR {
 		Layer(std::string name);
 		virtual ~Layer();
 
-		virtual void onAttach();
-		virtual void onDetach();
+		virtual void OnAttach();
+		virtual void OnDetach();
 
-		virtual void onUpdate();
-		virtual void onEvent();
+		virtual void OnUpdate();
+		virtual void OnEvent();
 
-		inline std::string getDebugName() { return m_DebugName; };
+		inline std::string GetDebugName() { return m_DebugName; };
 
 	private:
 		std::string m_DebugName;
@@ -26,11 +26,11 @@ namespace FLR {
 		LayerStack();
 		~LayerStack();
 
-		void attachLayer(Layer* lyr);
-		void attachOverlay(Layer* lyr);
+		void AttachLayer(Layer* lyr);
+		void AttachOverlay(Layer* lyr);
 
-		void detachLayer(Layer* lyr);
-		void detachOverlay(Layer* lyr);
+		void DetachLayer(Layer* lyr);
+		void DetachOverlay(Layer* lyr);
 
 		std::vector<Layer*>::iterator begin();
 		std::vector<Layer*>::iterator end();

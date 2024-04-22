@@ -1,7 +1,6 @@
 #pragma once
 
-
-#include "Obj/ObjParser.h"
+#include "ObjParser/ObjParser.h"
 
 namespace FLR {
 

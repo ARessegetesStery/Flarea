@@ -22,32 +22,32 @@ namespace FLR {
 		Application();
 		virtual ~Application();
 
-		void onEvent(Event& e);
-		bool onWindowClose(WindowClosedEvent& e);
+		void OnEvent(Event& e);
+		bool OnWindowClose(WindowClosedEvent& e);
 
-		bool onKeyPressed(KeyPressedEvent& e);
-		bool onKeyReleased(KeyReleasedEvent& e);
+		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnKeyReleased(KeyReleasedEvent& e);
 
-		void attachLayer(Layer* lyr);
-		void attachOverlay(Layer* lyr);
-		void detachLayer(Layer* lyr);
-		void detachOverlay(Layer* lyr);
+		void AttachLayer(Layer* lyr);
+		void AttachOverlay(Layer* lyr);
+		void DetachLayer(Layer* lyr);
+		void DetachOverlay(Layer* lyr);
 
-		void tick();
+		void MainLoop();
 
-		void updateApp();
+		void UpdateApp();
 
 	private:
-		bool m_Running;
-		float lastFrameTime;
-		float frameDeltaTime;
-		std::unique_ptr<Window> m_Window;
+		bool running;
+		float last_frame_time;
+		float frame_delta_time;
+		std::unique_ptr<Window> window;
 
-		static Application* s_Instance;
+		static Application* instance;
 
 		Camera camera;
 
-		LayerStack m_LayerStack;
+		LayerStack layer_stack;
 	};
 
 	inline Application* createApp() { return new Application; }

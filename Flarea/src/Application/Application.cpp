@@ -7,7 +7,7 @@
 
 #include "Loader/ObjParser/ObjParser.h"
 
-#include "Input.h"
+#include "Util/Input.h"
 
 #include <GLAD/glad.h>
 
@@ -15,100 +15,101 @@ namespace FLR {
 
 #define BIND_EVENT_FUNC(x) std::bind(&Application::x, this, std::placeholders::_1)
 
-	Application* Application::s_Instance = nullptr;
+	Application* Application::instance = nullptr;
 
 	Application::Application()
 	{
-		FLR_CORE_ASSERT(!s_Instance, "Application already exists!")
-		s_Instance = this;
-		lastFrameTime = 0;
-		frameDeltaTime = 0;
+		FLR_CORE_ASSERT(!instance, "Application already exists!")
+		instance = this;
+		last_frame_time = 0;
+		frame_delta_time = 0;
 
-		m_Running = true;
-		m_Window = std::unique_ptr<Window>(Window::createWindow());
+		running = true;
+		window = std::unique_ptr<Window>(Window::createWindow());
 
-		m_Window->setCallbackFunc(BIND_EVENT_FUNC(onEvent));
+		window->setCallbackFunc(BIND_EVENT_FUNC(OnEvent));
 	}
 
 	Application::~Application()
 	{
 	}
 
-	void Application::onEvent(Event& e)
+	void Application::OnEvent(Event& e)
 	{
 		// SP_CORE_LOG_INFO(e.ToString())
 
 		EventDispatcher Dispatcher(e);
-		Dispatcher.Dispatch<WindowClosedEvent>(BIND_EVENT_FUNC(onWindowClose));
-		Dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FUNC(onKeyPressed));
-		Dispatcher.Dispatch<KeyReleasedEvent>(BIND_EVENT_FUNC(onKeyReleased));
+		Dispatcher.Dispatch<WindowClosedEvent>(BIND_EVENT_FUNC(OnWindowClose));
+		Dispatcher.Dispatch<KeyPressedEvent>(BIND_EVENT_FUNC(OnKeyPressed));
+		Dispatcher.Dispatch<KeyReleasedEvent>(BIND_EVENT_FUNC(OnKeyReleased));
 	}
 
-	bool Application::onWindowClose(WindowClosedEvent& e)
+	bool Application::OnWindowClose(WindowClosedEvent& e)
 	{
 		FLR_CORE_INFO("Window Closed");
-		m_Running = false;
+		running = false;
 		return true;
 	}
 
-	bool Application::onKeyPressed(KeyPressedEvent& e)
+	bool Application::OnKeyPressed(KeyPressedEvent& e)
 	{
 		FLR_CORE_INFO(e.ToString());
 		return true;
 	}
 
-	bool Application::onKeyReleased(KeyReleasedEvent& e)
+	bool Application::OnKeyReleased(KeyReleasedEvent& e)
 	{
 		FLR_CORE_INFO(e.ToString());
 		return false;
 	}
 
-	void Application::attachLayer(Layer* lyr)
+	void Application::AttachLayer(Layer* lyr)
 	{
-		m_LayerStack.attachLayer(lyr);
+		layer_stack.AttachLayer(lyr);
 	}
 
-	void Application::attachOverlay(Layer* lyr)
+	void Application::AttachOverlay(Layer* lyr)
 	{
-		m_LayerStack.attachOverlay(lyr);
+		layer_stack.AttachOverlay(lyr);
 	}
 
-	void Application::detachLayer(Layer* lyr)
+	void Application::DetachLayer(Layer* lyr)
 	{
-		m_LayerStack.detachLayer(lyr);
+		layer_stack.DetachLayer(lyr);
 	}
 
-	void Application::detachOverlay(Layer* lyr)
+	void Application::DetachOverlay(Layer* lyr)
 	{
-		m_LayerStack.detachOverlay(lyr);
+		layer_stack.DetachOverlay(lyr);
 	}
 
-	void Application::tick()
+	void Application::MainLoop()
 	{
 		Entity entity;
 		ObjParser parser(&entity, "Cube");
+		parser.Parse();
 
-		while (m_Running)
+		while (running)
 		{
-			glClearColor(0.4f, 0.2f, 0.6f, 1.0f);
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			this->updateApp();
+			this->UpdateApp();
 
-			for (auto lyr : m_LayerStack)
+			for (auto lyr : layer_stack)
 			{
-				lyr->onEvent();
+				lyr->OnEvent();
 			}
 
-			m_Window->onUpdate();
+			window->OnUpdate();
 		}
 	}
 
-	void Application::updateApp()
+	void Application::UpdateApp()
 	{
 		float curFrameTime = static_cast<float>(glfwGetTime());
-		this->frameDeltaTime = curFrameTime - this->lastFrameTime;
-		this->lastFrameTime = curFrameTime;
+		this->frame_delta_time = curFrameTime - this->last_frame_time;
+		this->last_frame_time = curFrameTime;
 		//FLR_CORE_INFO("{0} seonds passed since last frame", frameDeltaTime);
 	}
 }

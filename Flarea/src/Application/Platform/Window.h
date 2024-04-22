@@ -27,7 +27,7 @@ namespace FLR {
 
 		virtual ~Window() {}
 
-		virtual void onUpdate() = 0;
+		virtual void OnUpdate() = 0;
 
 		virtual unsigned int getHeight() const = 0;
 		virtual unsigned int getWidth() const = 0;

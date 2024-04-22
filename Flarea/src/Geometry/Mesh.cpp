@@ -55,19 +55,19 @@ namespace FLR
 			++CurIndex;
 		}
 
-		this->faceIndices.emplace_back(indices);
+		this->face_indices.emplace_back(indices);
 	}
 
 	void Mesh::Clear()
 	{
 		this->vertices.clear();
-		this->faceIndices.clear();
+		this->face_indices.clear();
 	}
 
 	Mesh::Mesh()
 	{
 		this->vertices = {};
-		this->faceIndices = {};
+		this->face_indices = {};
 	}
 
 	Mesh::Mesh(const Mesh& m)
@@ -75,8 +75,8 @@ namespace FLR
 		this->Clear();
 		for (auto iter = m.vertices.begin(); iter != m.vertices.cend(); ++iter)
 			this->vertices.push_back(*iter);
-		for (auto iter = m.faceIndices.begin(); iter != m.faceIndices.cend(); ++iter)
-			this->faceIndices.push_back(*iter);
+		for (auto iter = m.face_indices.begin(); iter != m.face_indices.cend(); ++iter)
+			this->face_indices.push_back(*iter);
 	}
 
 	void Mesh::operator=(const Mesh& m)
@@ -84,7 +84,7 @@ namespace FLR
 		this->Clear();
 		for (auto iter = m.vertices.begin(); iter != m.vertices.cend(); ++iter)
 			this->vertices.push_back(*iter);
-		for (auto iter = m.faceIndices.begin(); iter != m.faceIndices.cend(); ++iter)
-			this->faceIndices.push_back(*iter);
+		for (auto iter = m.face_indices.begin(); iter != m.face_indices.cend(); ++iter)
+			this->face_indices.push_back(*iter);
 	}
 }

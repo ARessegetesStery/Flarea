@@ -11,22 +11,22 @@ namespace FLR {
 
 	}
 
-	void Layer::onAttach()
+	void Layer::OnAttach()
 	{
 
 	}
 
-	void Layer::onDetach()
+	void Layer::OnDetach()
 	{
 
 	}
 
-	void Layer::onUpdate()
+	void Layer::OnUpdate()
 	{
 
 	}
 
-	void Layer::onEvent()
+	void Layer::OnEvent()
 	{
 
 	}
@@ -44,20 +44,20 @@ namespace FLR {
 			delete i;
 	}
 
-	void LayerStack::attachLayer(Layer* lyr)
+	void LayerStack::AttachLayer(Layer* lyr)
 	{
 		m_Stack.insert(m_InsertSig, lyr);
-		lyr->onAttach();
+		lyr->OnAttach();
 		m_InsertSig = m_Stack.begin();
 	}
 
-	void LayerStack::attachOverlay(Layer* lyr)
+	void LayerStack::AttachOverlay(Layer* lyr)
 	{
 		m_Stack.emplace_back(lyr);
-		lyr->onAttach();
+		lyr->OnAttach();
 	}
 
-	void LayerStack::detachLayer(Layer* lyr)
+	void LayerStack::DetachLayer(Layer* lyr)
 	{
 		auto iter = std::find(m_Stack.begin(), m_Stack.end(), lyr);
 		if (iter != m_Stack.end())
@@ -68,7 +68,7 @@ namespace FLR {
 		}
 	}
 
-	void LayerStack::detachOverlay(Layer* lyr)
+	void LayerStack::DetachOverlay(Layer* lyr)
 	{
 		auto iter = std::find(m_Stack.begin(), m_Stack.end(), lyr);
 		if (iter != m_Stack.end())

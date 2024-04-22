@@ -21,6 +21,6 @@ namespace FLR
 
 	public:
 		std::vector<Vertex> vertices;
-		std::vector<std::array<size_t, 3>> faceIndices;
+		std::vector<std::array<size_t, 3>> face_indices;
 	};
 }

@@ -11,13 +11,13 @@ namespace FLR
 		{
 			const KeyPressedEvent* const keyEvent = static_cast<const KeyPressedEvent* const>(e);
 			if (e->GetKeyCode() == GLFW_KEY_W)
-				cameraPos += cameraSpeed * cameraFront;
+				camera_pos += camera_speed * camera_front;
 			if (e->GetKeyCode() == GLFW_KEY_S)
-				cameraPos -= cameraSpeed * cameraFront;
+				camera_pos -= camera_speed * camera_front;
 			if (e->GetKeyCode() == GLFW_KEY_A)
-				cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+				camera_pos -= glm::normalize(glm::cross(camera_front, camera_up)) * camera_speed;
 			if (e->GetKeyCode() == GLFW_KEY_D)
-				cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+				camera_pos += glm::normalize(glm::cross(camera_front, camera_up)) * camera_speed;
 		}
 	}
 }

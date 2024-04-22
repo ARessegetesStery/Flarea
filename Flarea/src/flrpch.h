@@ -36,7 +36,7 @@
 #include "Lua/lua.hpp"
 #include "LuaBridge/LuaBridge.h"
 
-#include "Log.h"
+#include "Util/Log.h"
 
 #include "GLFW/glfw3.h"
 

@@ -11,7 +11,7 @@ namespace FLR {
 		WindowsWindow(const WindowProp& prop);
 		virtual ~WindowsWindow();
 
-		virtual void onUpdate() override;
+		virtual void OnUpdate() override;
 
 		inline unsigned int getHeight() const override { return m_Info.height; }
 		inline unsigned int getWidth() const override { return m_Info.width; }
@@ -27,7 +27,7 @@ namespace FLR {
 
 	private:
 
-		GLFWwindow* m_Window;
+		GLFWwindow* window;
 
 		struct WindowInfo
 		{

@@ -40,22 +40,22 @@ namespace FLR {
 			s_GLFWInited = true;
 		}
 
-		m_Window = glfwCreateWindow(m_Info.width, m_Info.height, m_Info.name.c_str(), nullptr, nullptr);
+		window = glfwCreateWindow(m_Info.width, m_Info.height, m_Info.name.c_str(), nullptr, nullptr);
 		//glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-		glfwMakeContextCurrent(m_Window);
+		glfwMakeContextCurrent(window);
 		int success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		FLR_CORE_ASSERT(success, "GLAD failed to load!")
-		glfwSetWindowUserPointer(m_Window, &m_Info);
+		glfwSetWindowUserPointer(window, &m_Info);
 
 		/* ------ Setting up GLFW Callback Links ------*/
-		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
+		glfwSetWindowCloseCallback(window, [](GLFWwindow* window)
 		{
 			WindowInfo& info = *(WindowInfo*)glfwGetWindowUserPointer(window);
 			WindowClosedEvent e;
 			info.callback(e);
 		});
 
-		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
+		glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
 		{
 			WindowInfo& info = *(WindowInfo*)glfwGetWindowUserPointer(window);
 			info.width = width;
@@ -65,21 +65,21 @@ namespace FLR {
 			info.callback(e);
 		});
 
-		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double Xoffset, double Yoffset)
+		glfwSetScrollCallback(window, [](GLFWwindow* window, double Xoffset, double Yoffset)
 		{
 			WindowInfo& info = *(WindowInfo*)glfwGetWindowUserPointer(window);
 			MouseScrolledEvent e((float)Xoffset, (float)Yoffset);
 			info.callback(e);
 		});
 
-		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double XPos, double YPos)
+		glfwSetCursorPosCallback(window, [](GLFWwindow* window, double XPos, double YPos)
 		{
 			WindowInfo& info = *(WindowInfo*)glfwGetWindowUserPointer(window);
 			MouseMovedEvent e((float)XPos, (float)YPos);
 			info.callback(e);
 		});
 
-		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+		glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			WindowInfo& info = *(WindowInfo*)glfwGetWindowUserPointer(window);
 			switch (action)
@@ -99,7 +99,7 @@ namespace FLR {
 			}
 		});
 
-		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+		glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
 			WindowInfo& info = *(WindowInfo*)glfwGetWindowUserPointer(window);
 			switch (action)
@@ -129,15 +129,15 @@ namespace FLR {
 		setVSync(true);
 	}
 
-	void WindowsWindow::onUpdate()
+	void WindowsWindow::OnUpdate()
 	{
-		glfwSwapBuffers(m_Window);
+		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 
 	void WindowsWindow::shutdown()
 	{
-		glfwDestroyWindow(m_Window);
+		glfwDestroyWindow(window);
 	}
 
 	void WindowsWindow::setVSync(bool enabled)

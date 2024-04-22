@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 	FLR::Log::Init();
 
 	FLR::Application* app = FLR::createApp();
-	app->tick();
+	app->MainLoop();
 	delete app;
 
     return 0;

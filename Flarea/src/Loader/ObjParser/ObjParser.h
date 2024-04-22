@@ -24,13 +24,13 @@ namespace FLR {
                 ent = nullptr;
                 FLR_CORE_ERROR("Trying to parse into nullptr (expecting an `Entity`)");
             }
-            this->p_ent = ent;
+            this->ent = ent;
             this->filename = filename;
         }
         void Parse();
 
     private:
-        Entity* p_ent;
+        Entity* ent;
         string filename;
     };
 
