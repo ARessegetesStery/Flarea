@@ -3,7 +3,6 @@
 #include "Event.h"
 
 namespace FLR {
-
 	class MouseMovedEvent : public Event
 	{
 	public:

@@ -19,6 +19,8 @@ namespace FLR
 
 		void operator= (const Mesh& m);
 
+		size_t LoadInto(std::vector<float>& raw_vertices) const;
+
 #ifdef FLR_DEBUG
 		void Log() const;
 #endif

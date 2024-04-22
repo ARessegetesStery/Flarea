@@ -46,6 +46,7 @@ namespace FLR {
 		int success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		FLR_CORE_ASSERT(success, "GLAD failed to load!")
 		glfwSetWindowUserPointer(window, &m_Info);
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 		glEnable(GL_DEPTH_TEST);
 

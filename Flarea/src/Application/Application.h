@@ -13,6 +13,7 @@
 #include "Geometry/Geometry.h"
 
 #include "Camera.h"
+#include "Shader.h"
 
 namespace FLR {
 
@@ -27,15 +28,19 @@ namespace FLR {
 
 		bool OnKeyPressed(KeyPressedEvent& e);
 		bool OnKeyReleased(KeyReleasedEvent& e);
+		bool OnMouseMoved(MouseMovedEvent& e);
 
 		void AttachLayer(Layer* lyr);
 		void AttachOverlay(Layer* lyr);
 		void DetachLayer(Layer* lyr);
 		void DetachOverlay(Layer* lyr);
 
+		void LoadEntities();
+
 		void MainLoop();
 
 		void UpdateApp();
+		void Render();
 
 		inline void AddEntity(Entity* ent) { entities.push_back(ent); }
 
@@ -45,7 +50,13 @@ namespace FLR {
 		float frame_delta_time;
 		std::unique_ptr<Window> window;
 
+		std::vector<float> raw_vertices;
+
 		static Application* instance;
+		Shader shader;
+
+		size_t trig_count = 0;
+		unsigned int buffer_object = 0;
 
 		Camera camera;
 		std::vector<Entity*> entities;

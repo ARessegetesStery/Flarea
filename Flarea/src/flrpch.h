@@ -29,6 +29,7 @@
 #include <thread>
 
 #include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include "rapidjson/document.h"
 #include "rapidjson/filereadstream.h"

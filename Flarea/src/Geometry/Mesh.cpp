@@ -51,6 +51,27 @@ namespace FLR
 			this->face_indices.push_back(*iter);
 	}
 
+	size_t Mesh::LoadInto(std::vector<float>& raw_vertices) const
+	{
+		size_t trig_count = 0;
+		for (auto& face : this->face_indices)
+		{
+			for (size_t i = 0; i != 3; ++i)
+			{
+				raw_vertices.push_back(this->vertices[face[i]].pos.x);
+				raw_vertices.push_back(this->vertices[face[i]].pos.y);
+				raw_vertices.push_back(this->vertices[face[i]].pos.z);
+				raw_vertices.push_back(this->vertices[face[i]].normal.x);
+				raw_vertices.push_back(this->vertices[face[i]].normal.y);
+				raw_vertices.push_back(this->vertices[face[i]].normal.z);
+				raw_vertices.push_back(this->vertices[face[i]].texture_coord.x);
+				raw_vertices.push_back(this->vertices[face[i]].texture_coord.y);
+			}
+			++trig_count;
+		}
+		return trig_count;
+	}
+
 #ifdef FLR_DEBUG
 	void Mesh::Log() const
 	{
