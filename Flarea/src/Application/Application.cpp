@@ -95,8 +95,9 @@ namespace FLR {
 
 	void Application::LoadEntities()
 	{
+		this->trig_count = 0;
 		for (auto& ent : entities)
-			this->trig_count = ent->GetMesh().LoadInto(raw_vertices);
+			this->trig_count += ent->GetMesh().LoadInto(raw_vertices);
 
 		unsigned int VBO, VAO;
 		glGenVertexArrays(1, &VAO);
@@ -145,19 +146,27 @@ namespace FLR {
 			model = glm::rotate(model, ent->GetRotation(), glm::vec3(1.0f, 0.3f, 0.5f));
 			shader.setMat4("model", model);
 
-			glDrawArrays(GL_TRIANGLES, 0, 36);
+			glDrawArrays(GL_TRIANGLES, 0, trig_count * 3);
 		}
 	}
 
 	void Application::MainLoop()
 	{
 		Entity entity;
-		entity.SetPosition(glm::vec3(0.0f, 0.0f, -3.0f));
+		entity.SetPosition(glm::vec3(0.0f, 0.0f, -2.0f));
 		entity.SetRotation(0.0f);
-		this->AddEntity(&entity);
-		ObjParser parser(&entity, "Cube");
+		ObjParser parser(&entity, "teapot");
 		parser.Parse();
-		entity.Log();
+		//entity.Log();
+		this->AddEntity(&entity);
+
+		Entity entity2;
+		entity2.SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
+		entity2.SetRotation(0.0f);
+		ObjParser parser2(&entity2, "cube");
+		parser2.Parse();
+		//this->AddEntity(&entity2);
+		//entity.Log();
 
 		this->LoadEntities();
 
